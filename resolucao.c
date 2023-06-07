@@ -48,6 +48,7 @@ void imprimir_tabuleiro (char tabuleiro[3][3])
                 }
             
             } 
+             printf("\n");
 
             if (i < 2) // necessario outro 'íf' para nao imprimir tracejado apos a linha 2
             {
@@ -55,7 +56,7 @@ void imprimir_tabuleiro (char tabuleiro[3][3])
             }
     
         }
-            printf("\n");
+           
     }
 }
 
