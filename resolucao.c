@@ -2,7 +2,7 @@
 //pode ser uma constante definida no programa
 //tabuleiro rudimentar, pode ser feito em N linhas de texto (marcando com um ponto as posicoes livres)
 //jogadores identificados pelos simbolos 'O' e 'X'
-// posicoes vazias representadas por ' ' (espaco em branco)
+//posicoes vazias representadas por ' ' (espaco em branco)
 //jogadas alternadas, preenchendo um espaco de cada vez
 //identificar quando os simbolos completarem uma linha horizontal, vertical ou diagonal se ganhar
 
@@ -22,9 +22,9 @@ void iniciar_tabuleiro (char tabuleiro[3][3])
     for (i = 0; i < 3; i++)
     {
         for (j = 0; j < 3; j++)
-        {
+        
            tabuleiro[i][j] = ' ';
-        }
+        
     }
 }
 
@@ -32,32 +32,29 @@ void iniciar_tabuleiro (char tabuleiro[3][3])
 void imprimir_tabuleiro (char tabuleiro[3][3])
 {
    
-    printf(" 0   1   2\n\n"); // numerar coluna
+    printf("\n\n\t 0   1   2\n\n"); // numerar coluna
     for (i = 0; i < 3; i++)
     {
         for (j = 0; j < 3; j++)
         {
+            if (j == 0)
+                printf("\t"); // 't' = mesma funcao da tecla tab
+            
                 printf(" %c ", tabuleiro[i][j]); // espaço antes e depois do '%c' para as linhas/colunas ficarem espaçadas 
+
             if (j < 2)
-            {
                 printf("|");
 
-                if (j == 2)
-                {
-                    printf(" %d", i); // numerar linha apenas quando  tiver impresso o caracter 2 da coluna
-                }
-            
-            } 
-             printf("\n");
+            if (j == 2)
+                printf("  %d", i); // numerar linha apenas quando tiver impresso o caracter 2 da coluna
+             
+        } 
+                printf("\n");
 
             if (i < 2) // necessario outro 'íf' para nao imprimir tracejado apos a linha 2
-            {
-                printf("\n----------");
-            }
-    
-        }
-           
+                printf("\t-----------\n");           
     }
+            
 }
 
 
@@ -99,8 +96,23 @@ int verificar_tabuleiro (char tabuleiro [3][3]);
 //retornar 1 se for final de jogo e 0 se nao for
 
 {
+    int i,j; // linha
+    char c; // caracter X ou O 
       
 // GANHAR POR LINHA
+    for ( i = 0; i < 3; i++)
+    {
+        if (tabuleiro[i][0] == c && tabuleiro[i][1] == c && tabuleiro[i][2] == c)
+        {
+            return 1;
+
+        }else
+
+            return 0;
+    }
+
+// GANHAR POR LINHAS 
+  
     if (tabuleiro[0][0] == '0' &&  tabuleiro[0][1] == '0' && tabuleiro[0][2] == '0' ||
         tabuleiro[1][0] == '0' && tabuleiro[1][1] == '0' && tabuleiro[1][2] == '0'  ||
         tabuleiro[2][0] == '0' && tabuleiro[2][1] == '0' && tabuleiro[2][2] == '0')
@@ -117,6 +129,18 @@ int verificar_tabuleiro (char tabuleiro [3][3]);
 
 
 // GANHAR POR COLUNA
+    for ( i = 0; i < 3; i++)
+    {
+        if (tabuleiro[0][j] == c && tabuleiro[1][j] == c && tabuleiro[2][j] == c)
+        {
+            return 1;
+
+        }else
+
+            return 0;
+    }
+
+
     if (tabuleiro[0][0] == '0' &&  tabuleiro[1][0] == '0' && tabuleiro[2][0] == '0' ||
         tabuleiro[0][1] == '0' && tabuleiro[1][1] == '0' && tabuleiro[2][1] == '0'  ||
         tabuleiro[0][2] == '0' && tabuleiro[1][2] == '0' && tabuleiro[2][2] == '0')
@@ -133,6 +157,16 @@ int verificar_tabuleiro (char tabuleiro [3][3]);
 
 
 // GANHAR PELA DIAGONAL (1)
+    if (tabuleiro[0][0] == c && tabuleiro[1][1] == c && tabuleiro[2][2] == c )
+    {
+        return 1;
+
+    } else
+
+        return 0;
+
+ -------------------------------------------------------------------------------------    
+     
     if (tabuleiro[0][0] == '0' && tabuleiro[1][1] == '0' && tabuleiro[2][2] == '0')
     {
         printf("jogador 1 venceu!\n");
@@ -145,6 +179,14 @@ int verificar_tabuleiro (char tabuleiro [3][3]);
 
 
 // GANHAR PELA DIAGONAL (2)
+      if (tabuleiro[0][2] == c && tabuleiro[1][1] == c && tabuleiro[2][0] == c )
+    {
+        return 1;
+
+    } else
+    
+        return 0;
+-------------------------------------------------------------------------------------
     if (tabuleiro[0][2] == '0' && tabuleiro[1][1] == '0' && tabuleiro[2][0] == '0')
     {
         printf("jogador 1 venceu!\n");
