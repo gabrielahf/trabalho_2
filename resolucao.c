@@ -94,109 +94,85 @@ int verificar_tabuleiro (char tabuleiro [3][3]);
 //deve procurar por uma condicao de fim de jogo
 //sequencia ou empate, que ocorre quando todos os elementos forem preenchidos e nao houve sequencia
 //retornar 1 se for final de jogo e 0 se nao for
-
 {
-    int i,j; // linha
-    char c; // caracter X ou O 
-      
-// GANHAR POR LINHA
-    for ( i = 0; i < 3; i++)
-    {
-        if (tabuleiro[i][0] == c && tabuleiro[i][1] == c && tabuleiro[i][2] == c)
-        {
-            return 1;
-
-        }else
-
-            return 0;
-    }
-
-// GANHAR POR LINHAS 
-  
-    if (tabuleiro[0][0] == '0' &&  tabuleiro[0][1] == '0' && tabuleiro[0][2] == '0' ||
-        tabuleiro[1][0] == '0' && tabuleiro[1][1] == '0' && tabuleiro[1][2] == '0'  ||
-        tabuleiro[2][0] == '0' && tabuleiro[2][1] == '0' && tabuleiro[2][2] == '0')
-    {
-        printf("jogador 1 venceu!\n");
-    }
-
-    if (tabuleiro[0][0] == 'X' &&  tabuleiro[0][1] == 'X' && tabuleiro[0][2] == 'X' ||
-        tabuleiro[1][0] == 'X' && tabuleiro[1][1] == 'X' && tabuleiro[1][2] == 'X'  ||
-        tabuleiro[2][0] == 'X' && tabuleiro[2][1] == 'X' && tabuleiro[2][2] == 'X')
-    {
-        printf("jogador 2 venceu!\n");
-    }
-
-
-// GANHAR POR COLUNA
-    for ( i = 0; i < 3; i++)
-    {
-        if (tabuleiro[0][j] == c && tabuleiro[1][j] == c && tabuleiro[2][j] == c)
-        {
-            return 1;
-
-        }else
-
-            return 0;
-    }
-
-
-    if (tabuleiro[0][0] == '0' &&  tabuleiro[1][0] == '0' && tabuleiro[2][0] == '0' ||
-        tabuleiro[0][1] == '0' && tabuleiro[1][1] == '0' && tabuleiro[2][1] == '0'  ||
-        tabuleiro[0][2] == '0' && tabuleiro[1][2] == '0' && tabuleiro[2][2] == '0')
-    {
-        printf("jogador 1 venceu!\n");
-    }
-
-    if (tabuleiro[0][0] == 'X' &&  tabuleiro[1][0] == 'X' && tabuleiro[2][0] == 'X' ||
-        tabuleiro[0][1] == 'X' && tabuleiro[1][1] == 'X' && tabuleiro[2][1] == 'X'  ||
-        tabuleiro[0][2] == 'X' && tabuleiro[1][2] == 'X' && tabuleiro[2][2] == 'X')
-    {
-        printf("jogador 2 venceu!\n");
-    }
-
-
-// GANHAR PELA DIAGONAL (1)
-    if (tabuleiro[0][0] == c && tabuleiro[1][1] == c && tabuleiro[2][2] == c )
-    {
+    //ganhou X por colunas
+    if(tabuleiro[0][0] == 'X' && tabuleiro[1][0] == 'X' && tabuleiro [2][0] == 'X'){
+        
         return 1;
-
-    } else
-
-        return 0;
-
- -------------------------------------------------------------------------------------    
-     
-    if (tabuleiro[0][0] == '0' && tabuleiro[1][1] == '0' && tabuleiro[2][2] == '0')
-    {
-        printf("jogador 1 venceu!\n");
     }
-    if (tabuleiro[0][0] == 'X' && tabuleiro[1][1] == 'X' && tabuleiro[2][2] == 'X')
-    {
-        printf("jogador 2 venceu!\n");
-    }
-
-
-
-// GANHAR PELA DIAGONAL (2)
-      if (tabuleiro[0][2] == c && tabuleiro[1][1] == c && tabuleiro[2][0] == c )
-    {
+     else if(tabuleiro[0][1] == 'X' && tabuleiro[1][1] == 'X' && tabuleiro[2][1] == 'X'){
+        
         return 1;
+     }
+     else if(tabuleiro[0][2] == 'X' && tabuleiro[1][2] == 'X' && tabuleiro[2][2] == 'X'){
+        
+        return 1;
+    }
 
-    } else
+
+
+     //ganhou x por linhas
+     else if(tabuleiro[0][0] == 'X' && tabuleiro[0][1] == 'X' && tabuleiro[0][2] == 'X'){
     
-        return 0;
--------------------------------------------------------------------------------------
-    if (tabuleiro[0][2] == '0' && tabuleiro[1][1] == '0' && tabuleiro[2][0] == '0')
-    {
-        printf("jogador 1 venceu!\n");
+    return 1;
     }
-    if (tabuleiro[0][2] == 'X' && tabuleiro[1][1] == 'X' && tabuleiro[2][0] == 'X')
-    {
-        printf("jogador 2 venceu!\n");
+    else if(tabuleiro[1][0] == 'X' && tabuleiro[1][1] == 'X' && tabuleiro[1][2] == 'X'){
+    
+    return 1;
+    } 
+    else if(tabuleiro[2][0] == 'X' && tabuleiro[2][1] == 'X' && tabuleiro[2][2] == 'X'){
+    
+    return 1;
+    }
+    //ganhou X por diagonal 
+    else if(tabuleiro[0][0] == 'X' && tabuleiro[1][1] == 'X' && tabuleiro[2][2] == 'X'){
+    
+    return 1;
+    }
+    else if(tabuleiro[0][2] == 'X' && tabuleiro[1][1] == 'X' && tabuleiro[2][0] == 'X'){
+    
+    return 1;
+    }
+    //ganhou O por coluna
+    if(tabuleiro[0][0] == 'O' && tabuleiro[1][0] == 'O' && tabuleiro [2][0] == 'O'){
+    
+    return 1;
+    }
+    else if(tabuleiro[0][1] == 'O' && tabuleiro[1][1] == 'O' && tabuleiro[2][1] == 'O'){
+    
+    return 1;
+    }
+    else if(tabuleiro[0][2] == 'O' && tabuleiro[1][2] == 'O' && tabuleiro[2][2] == 'O'){
+    
+    return 1;
     }
 
-}
+    //ganhou O por linha
+    if(tabuleiro[0][0] == 'O' && tabuleiro[0][1] == 'O' && tabuleiro[0][2] == 'O'){
+    
+    return 1;
+    }
+    else if(tabuleiro[1][0] == 'O' && tabuleiro[1][1] == 'O' && tabuleiro[1][2] == 'O'){
+    
+    return 1;
+    }
+    else if(tabuleiro[2][0] == 'O' && tabuleiro[2][1] == 'O' && tabuleiro[2][2] == 'O'){
+    
+    return 1;
+    }
+
+    //ganhou O por diagonal 
+    if(tabuleiro[0][0] == 'O' && tabuleiro[1][1] == 'O' && tabuleiro[2][2] == 'O'){
+    
+    return 1;
+    }
+    else if(tabuleiro[0][2] == 'O' && tabuleiro[1][1] == 'O' && tabuleiro[2][0] == 'O'){
+    
+    return 1; 
+    }
+
+    return 0;
+
 
 
 
