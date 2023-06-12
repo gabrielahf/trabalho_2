@@ -63,21 +63,21 @@ int realizar_jogada (int jogador, int linha, int coluna, char tabuleiro [3][3])
 //se a posicao estiver dentro dos limites do tabuleiro e nao existir outro simbolo nesta posicao, marcar a posicao com o simbolo correspondente ao jogador
 
 {
-    int jogador;
+    int jogador = 0;
 
     do
     {   
         printf("JOGADOR %d: qual a linha (0 à 2) e a coluna (0 à 2) que deseja jogar? ", jogador);
-        scanf("%d %d", &linha, &coluna);
+        scanf("%d %d", &i, &j);
         
         if (jogador == 1)
         {
-            jogador[linha][coluna] = 'O'; // jogador 1 joga
+            tabuleiro[i][j] = 'O'; // jogador 1 joga
             jogador++; // variavel vai para 2
         } 
         else 
         {
-            jogador[linha][coluna] = 'X'; // jogador 2 joga
+            tabuleiro[i][j] = 'X'; // jogador 2 joga
             jogador = 1; // variavel volta a ser 1 pois a proxima jogada é ele quem faz
         }
 
@@ -90,7 +90,7 @@ int realizar_jogada (int jogador, int linha, int coluna, char tabuleiro [3][3])
 }
 
 
-int verificar_tabuleiro (char tabuleiro [3][3]);
+int verificar_tabuleiro (char tabuleiro [3][3])
 //deve procurar por uma condicao de fim de jogo
 //sequencia ou empate, que ocorre quando todos os elementos forem preenchidos e nao houve sequencia
 //retornar 1 se for final de jogo e 0 se nao for
@@ -108,7 +108,6 @@ int verificar_tabuleiro (char tabuleiro [3][3]);
         
         return 1;
     }
-
 
 
      //ganhou x por linhas
@@ -172,22 +171,22 @@ int verificar_tabuleiro (char tabuleiro [3][3]);
     }
 
     return 0;
-
+}
 
 
 
 int main()
 {
-    
+    int jogar_novamente;
+
     do
     {
-        iniciar_tabuleiro();
-        imprimir_tabuleiro();
+         iniciar_tabuleiro();
+         imprimir_tabuleiro();
+        printf("deseja jogar novamente? /n (1)Sim /n (2)Nao /n");
+        scanf("%d", &jogar_novamente);
 
-    } while (1);
-
-        realizar_jogada();
-        verificar_tabuleiro();
+    } while (jogar_novamente == 1);
 
         return 0;
         
