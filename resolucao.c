@@ -65,8 +65,6 @@ int realizar_jogada (int jogador, int linha, int coluna, char tabuleiro [3][3])
 {
     int jogador = 0;
 
-    do
-    {   
         printf("JOGADOR %d: qual a linha (0 à 2) e a coluna (0 à 2) que deseja jogar? ", jogador);
         scanf("%d %d", &i, &j);
         
@@ -83,9 +81,19 @@ int realizar_jogada (int jogador, int linha, int coluna, char tabuleiro [3][3])
 
         return 1;
 
-    } while (linha < 0 || linha > 2 || coluna < 0 || coluna > 2 || tabuleiro[linha][coluna] != ' ');
-    
-    return 0;
+     for ( i = 0; i < 3; i++)
+    {
+        for ( j = 0; j < 3; j++)
+        {
+            if (i < 0 || i > 2 || j < 0 || j > 2 || tabuleiro[i][j] != ' ')
+            {
+                printf("valores inválidos! /n");
+            }
+            
+        }
+        
+    }
+        return 0;
     
 }
 
@@ -95,6 +103,7 @@ int verificar_tabuleiro (char tabuleiro [3][3])
 //sequencia ou empate, que ocorre quando todos os elementos forem preenchidos e nao houve sequencia
 //retornar 1 se for final de jogo e 0 se nao for
 {
+    
     //ganhou X por colunas
     if(tabuleiro[0][0] == 'X' && tabuleiro[1][0] == 'X' && tabuleiro [2][0] == 'X'){
         
