@@ -1,213 +1,144 @@
-//implementacao do JOGO DA VELHA de tabuleiro parametrizavel
-//pode ser uma constante definida no programa
-//tabuleiro rudimentar, pode ser feito em N linhas de texto (marcando com um ponto as posicoes livres)
-//jogadores identificados pelos simbolos 'O' e 'X'
-//posicoes vazias representadas por ' ' (espaco em branco)
-//jogadas alternadas, preenchendo um espaco de cada vez
-//identificar quando os simbolos completarem uma linha horizontal, vertical ou diagonal se ganhar
-
-
 #include <stdio.h>
-#include <stdlib.h>
+#include <stdlib.h> // alocacao de memoria 
 
-// variavies globais
+// Variáveis globais
 char tabuleiro[3][3];
-int i,j; // i = linha, j = coluna
+int jogador;
+int jogadas = 0; 
 
-
-//deve marcar as posicoes da matriz tabuleiro com caractere de espaco
-void iniciar_tabuleiro (char tabuleiro[3][3])
+// Função para iniciar o tabuleiro
+void iniciar_tabuleiro()
 {
-
-    for (i = 0; i < 3; i++)
+    for (int i = 0; i < 3; i++)
     {
-        for (j = 0; j < 3; j++)
-        
-           tabuleiro[i][j] = ' ';
-        
+        for (int j = 0; j < 3; j++)
+        {
+            tabuleiro[i][j] = ' '; // preenche todas as posições do tabuleiro com espaços vazios
+        }
     }
 }
 
-//deve apresentar o tabuleiro na tela
-void imprimir_tabuleiro (char tabuleiro[3][3])
+// Função para imprimir o tabuleiro
+void imprimir_tabuleiro()
 {
-   
-    printf("\n\n\t 0   1   2\n\n"); // numerar coluna
-    for (i = 0; i < 3; i++)
+    printf("\n\n\t 0   1   2\n\n"); // numerar as colunas
+    for (int i = 0; i < 3; i++)
     {
-        for (j = 0; j < 3; j++)
+        for (int j = 0; j < 3; j++)
         {
             if (j == 0)
-                printf("\t"); // 't' = mesma funcao da tecla tab
-            
-                printf(" %c ", tabuleiro[i][j]); // espaço antes e depois do '%c' para as linhas/colunas ficarem espaçadas 
+                printf("\t"); // 't' possui a funcao da tecla tab
+
+            printf(" %c ", tabuleiro[i][j]); // espacamento entre '%c' serve para as colunas não ficarem mt juntas
 
             if (j < 2)
                 printf("|");
 
             if (j == 2)
-                printf("  %d", i); // numerar linha apenas quando tiver impresso o caracter 2 da coluna
-             
-        } 
-                printf("\n");
+                printf("  %d", i); // numerar linha ( 0 1 2) apenas quando tiver impresso o caracter '2' da coluna 
+        }
+        printf("\n");
 
-            if (i < 2) // necessario outro 'íf' para nao imprimir tracejado apos a linha 2
-                printf("\t-----------\n");           
+        if (i < 2) // necessario outro 'íf' para nao imprimir tracejado apos a linha '2'
+            printf("\t-----------\n");
     }
-            
 }
 
-
-int realizar_jogada (int jogador, int linha, int coluna, char tabuleiro [3][3])
-//recebe um numero para indicar o jogador (1 ou 2) e os valores de linha e coluna escolhidos pelo usuario
-//se a posicao estiver dentro dos limites do tabuleiro e nao existir outro simbolo nesta posicao, marcar a posicao com o simbolo correspondente ao jogador
-
+// Função para realizar uma jogada
+int realizar_jogada()
 {
-    int jogador = 0;
+    int linha, coluna;
 
-        printf("JOGADOR %d: qual a linha (0 à 2) e a coluna (0 à 2) que deseja jogar? ", jogador);
-        scanf("%d %d", &i, &j);
-        
-        if (jogador == 1)
-        {
-            tabuleiro[i][j] = 'O'; // jogador 1 joga
-            jogador++; // variavel vai para 2
-        } 
-        else 
-        {
-            tabuleiro[i][j] = 'X'; // jogador 2 joga
-            jogador = 1; // variavel volta a ser 1 pois a proxima jogada é ele quem faz
-        }
+    printf("Jogador %d, digite a linha e a coluna que deseja jogar:\n", jogador);
+    scanf("%d %d", &linha, &coluna);
 
-        return 1;
-
-     for ( i = 0; i < 3; i++)
+    if (linha < 0 || linha > 2 || coluna < 0 || coluna > 2 || tabuleiro[linha][coluna] != ' ')
     {
-        for ( j = 0; j < 3; j++)
-        {
-            if (i < 0 || i > 2 || j < 0 || j > 2 || tabuleiro[i][j] != ' ')
-            {
-                printf("valores inválidos! /n");
-            }
-            
-        }
-        
-    }
+        printf("Valores inválidos!\n");
         return 0;
-    
+    }
+
+    if (jogador == 1)
+        tabuleiro[linha][coluna] = 'X';
+    else
+        tabuleiro[linha][coluna] = 'O';
+
+    jogadas++; // incrementa o numero de jogadas
+    return 1;
 }
 
-
-int verificar_tabuleiro (char tabuleiro [3][3])
-//deve procurar por uma condicao de fim de jogo
-//sequencia ou empate, que ocorre quando todos os elementos forem preenchidos e nao houve sequencia
-//retornar 1 se for final de jogo e 0 se nao for
+// Função para verificar o tabuleiro e determinar se há um vencedor ou empate
+int verificar_tabuleiro()
 {
-    
-    //ganhou X por colunas
-    if(tabuleiro[0][0] == 'X' && tabuleiro[1][0] == 'X' && tabuleiro [2][0] == 'X'){
-        
+    // Verificar linhas
+    for (int i = 0; i < 3; i++)
+    {
+        if (tabuleiro[i][0] == tabuleiro[i][1] && tabuleiro[i][1] == tabuleiro[i][2] && tabuleiro[i][0] != ' ')
+        {
+            printf("Jogador %d venceu!\n", jogador);
+            return 1;
+        }
+    }
+
+    // Verificar colunas
+    for (int j = 0; j < 3; j++)
+    {
+        if (tabuleiro[0][j] == tabuleiro[1][j] && tabuleiro[1][j] == tabuleiro[2][j] && tabuleiro[0][j] != ' ')
+        {
+            printf("Jogador %d venceu!\n", jogador);
+            return 1;
+        }
+    }
+
+    // Verificar diagonais
+    if ((tabuleiro[0][0] == tabuleiro[1][1] && tabuleiro[1][1] == tabuleiro[2][2] && tabuleiro[0][0] != ' ') ||
+        (tabuleiro[0][2] == tabuleiro[1][1] && tabuleiro[1][1] == tabuleiro[2][0] && tabuleiro[0][2] != ' '))
+    {
+        printf("Jogador %d venceu!\n", jogador);
         return 1;
     }
-     else if(tabuleiro[0][1] == 'X' && tabuleiro[1][1] == 'X' && tabuleiro[2][1] == 'X'){
-        
+
+    // Verificar empate
+    if (jogadas == 9)
+    {
+        printf("Empate!\n");
         return 1;
-     }
-     else if(tabuleiro[0][2] == 'X' && tabuleiro[1][2] == 'X' && tabuleiro[2][2] == 'X'){
-        
-        return 1;
-    }
-
-
-     //ganhou x por linhas
-     else if(tabuleiro[0][0] == 'X' && tabuleiro[0][1] == 'X' && tabuleiro[0][2] == 'X'){
-    
-    return 1;
-    }
-    else if(tabuleiro[1][0] == 'X' && tabuleiro[1][1] == 'X' && tabuleiro[1][2] == 'X'){
-    
-    return 1;
-    } 
-    else if(tabuleiro[2][0] == 'X' && tabuleiro[2][1] == 'X' && tabuleiro[2][2] == 'X'){
-    
-    return 1;
-    }
-    //ganhou X por diagonal 
-    else if(tabuleiro[0][0] == 'X' && tabuleiro[1][1] == 'X' && tabuleiro[2][2] == 'X'){
-    
-    return 1;
-    }
-    else if(tabuleiro[0][2] == 'X' && tabuleiro[1][1] == 'X' && tabuleiro[2][0] == 'X'){
-    
-    return 1;
-    }
-    //ganhou O por coluna
-    if(tabuleiro[0][0] == 'O' && tabuleiro[1][0] == 'O' && tabuleiro [2][0] == 'O'){
-    
-    return 1;
-    }
-    else if(tabuleiro[0][1] == 'O' && tabuleiro[1][1] == 'O' && tabuleiro[2][1] == 'O'){
-    
-    return 1;
-    }
-    else if(tabuleiro[0][2] == 'O' && tabuleiro[1][2] == 'O' && tabuleiro[2][2] == 'O'){
-    
-    return 1;
-    }
-
-    //ganhou O por linha
-    if(tabuleiro[0][0] == 'O' && tabuleiro[0][1] == 'O' && tabuleiro[0][2] == 'O'){
-    
-    return 1;
-    }
-    else if(tabuleiro[1][0] == 'O' && tabuleiro[1][1] == 'O' && tabuleiro[1][2] == 'O'){
-    
-    return 1;
-    }
-    else if(tabuleiro[2][0] == 'O' && tabuleiro[2][1] == 'O' && tabuleiro[2][2] == 'O'){
-    
-    return 1;
-    }
-
-    //ganhou O por diagonal 
-    if(tabuleiro[0][0] == 'O' && tabuleiro[1][1] == 'O' && tabuleiro[2][2] == 'O'){
-    
-    return 1;
-    }
-    else if(tabuleiro[0][2] == 'O' && tabuleiro[1][1] == 'O' && tabuleiro[2][0] == 'O'){
-    
-    return 1; 
     }
 
     return 0;
 }
 
-
-
 int main()
 {
-    int jogar_novamente;
+    int jogar_novamente = 1;
 
-    do
+    while (jogar_novamente)
     {
-         iniciar_tabuleiro();
-         imprimir_tabuleiro();
-        printf("deseja jogar novamente? /n (1)Sim /n (2)Nao /n");
+        // Iniciar o jogo
+        iniciar_tabuleiro();
+        jogador = 1;
+        jogadas = 0;
+
+        while (1)
+        {
+            imprimir_tabuleiro();
+
+            if (!realizar_jogada()) // o uso de '!' na frente da funcao verifica se a função realizar_jogada() retornou falso (se a jogada não foi realizada com sucesso)
+                continue;
+
+            if (verificar_tabuleiro())
+                break;
+
+            // Alternar jogador
+            if (jogador == 1)
+                jogador = 2;
+            else
+                jogador = 1;
+        }
+
+        printf("Deseja jogar novamente? (1 - Sim, 0 - Não): ");
         scanf("%d", &jogar_novamente);
+    }
 
-    } while (jogar_novamente == 1);
-
-        return 0;
-        
-
-    //iniciar tabuleiro
-    //imprimir tabuleiro
-    //ler uma linha e uma coluna do jogador 1
-    //realizar uma jogada - se for valida continuar, senao emitir erro e retornar o passo anterior
-    //verificar o tabuleiro para condicao de fim de jogo - se for verdadeiro ir para o passo 10, senao continuar
-    //imprimir o tabuleiro
-    //ler uma linha e uma coluna do jogador 2
-    //realizar uma jogada - se for valida continuar, senao emitir erro e retornar ao passo anterior
-    //verificar o tabuleiro para condicao de fim de jogo - se for verdadeiro continuar, senao retornar ao passo 2
-    //10- apresentar o tabuleiro e o vencedor
+    return 0;
 }
